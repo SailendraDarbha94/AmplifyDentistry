@@ -30,12 +30,18 @@ const MoviesList = () => {
   };
 
   const nextPageOfMovies = async () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     setPageNumber((prev) => {
       return prev + 1;
     });
   };
 
   const prevPageOfMovies = async () => {
+    if (typeof window !== "undefined") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
     if (pageNumber === 1) {
       console.error("Cannot go below page number 1");
       return;
@@ -74,7 +80,7 @@ const MoviesList = () => {
   }, [fetchMovies]);
 
   return (
-    <main className="w-full bg-purple-400 h-full p-4">
+    <main className="w-full h-full p-4">
       <FilterBar handleChange={handleChange} />
       <div>
         {loading ? (

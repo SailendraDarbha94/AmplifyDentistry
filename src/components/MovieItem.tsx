@@ -11,7 +11,7 @@ const MovieItem = ({ ...Movie }: Movie) => {
         }}
       />
       <div className="bg-slate-900 rounded-lg">
-        <h1 className="font-bold rounded-tr-lg p-2 text-center text-white text-2xl  rounded-tl-lg bg-slate-900">
+        <h1 className="font-bold rounded-tr-lg p-2 text-center text-white text-3xl  rounded-tl-lg bg-slate-900">
           {Movie.title}
         </h1>
         <div className="flex flex-wrap items-center pb-4">
@@ -42,13 +42,6 @@ const MovieItem = ({ ...Movie }: Movie) => {
             />
           </div>
         </div>
-        {/* <h1>Original title: {Movie.original_title}</h1>
-        <p>Original Language: {Movie.original_language}</p>
-        <img
-          src={`https://image.tmdb.org/t/p/w500/${Movie.poster_path}`}
-          alt="movie poster"
-          className="max-w-full max-h-80 rounded-lg"
-        /> */}
       </div>
     </div>
   );
