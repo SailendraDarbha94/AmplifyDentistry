@@ -1,36 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### To run this project locally
 
-## Getting Started
+system prerequisites : NodeJS
+others : the movie database API key
 
-First, run the development server:
+clone this repository in your machine or download the zip file and extract the contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+then navigate into the folder using your powershell on windows or terminal on mac, if you're a linux user you already know everything
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+once inside run these commands
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+once installed you can spin up the local web server with this command
 
-## Learn More
+## npm run dev
 
-To learn more about Next.js, take a look at the following resources:
+this will start the website on your 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## http://localhost:3000
