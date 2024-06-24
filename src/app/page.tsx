@@ -2,14 +2,16 @@
 import MovieItem from "@/components/MovieItem";
 import MoviesList from "@/components/MoviesList";
 import { Movie, ResponseData } from "@/constants/interfaces";
+import { ToastContext } from "@/providers/ToastContextProvider";
 import Image from "next/image";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 export default function Home() {
   const [movieName, setMovieName] = useState<string>("");
   const [data, setData] = useState<Movie[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
+  const { toast } = useContext(ToastContext);
   const searchMovie = useCallback(async () => {
     setLoading(true);
     try {
@@ -23,9 +25,17 @@ export default function Home() {
       });
       const data: ResponseData = await res.json();
       setData(data.results);
+      toast({
+        message: "Movies Fetched!",
+        type: "success"
+      })
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      toast({
+        message: "An Error Occured!",
+        type: "failure"
+      })
       console.log(JSON.stringify(err));
     }
   }, [movieName]);

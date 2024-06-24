@@ -1,9 +1,10 @@
 "use client";
 
 import { Movie, ResponseData } from "@/constants/interfaces";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import MovieItem from "./MovieItem";
 import FilterBar from "./FilterBar";
+import { ToastContext } from "@/providers/ToastContextProvider";
 
 const MoviesList = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -12,7 +13,7 @@ const MoviesList = () => {
   const [language, setLanguage] = useState<string>("en-US");
   const [region, setRegion] = useState<string>("USA");
   const [category, setCategory] = useState<string>("popular");
-
+  const { toast } = useContext(ToastContext);
   const handleChange = (event: any, filter: string) => {
     switch (filter) {
       case "language":
@@ -68,10 +69,18 @@ const MoviesList = () => {
       if (data) {
         setData(data.results);
         setLoading(false);
+        toast({
+          message: "Movies Fetched!",
+          type: "success",
+        });
       }
     } catch (err) {
       JSON.stringify(err);
       setLoading(false);
+      toast({
+        message: "An Error Occured!",
+        type: "failure",
+      });
     }
   }, [pageNumber, language, region, category]);
 
