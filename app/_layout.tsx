@@ -52,8 +52,6 @@ export default function RootLayout() {
       ) : (
         <Stack>
           <Stack.Screen name="(auth)/index" options={{ headerShown: true, headerTitle: "Create Account" }} />
-          <Stack.Screen name="test-view/index" options={{ headerShown: true, headerTitle: "Text AI" }} />
-          <Stack.Screen name="(test)/index" options={{ headerShown: true, headerTitle: "Text" }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="text-view" />
         </Stack>

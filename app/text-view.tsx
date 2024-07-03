@@ -23,38 +23,47 @@ export default function Home() {
   const finalPrompt = `You are a helpful assistant that will answer this question : ${prompt}`;
 
   const getAiResponse = async () => {
-    console.log(apiKey)
+    setLoading(true)
     try {
-      const prompt = "Write a story about a magic backpack."
-      const result = await model.generateContentStream(prompt);
-      //const response = await result.response;
-      //const text = response.text();
-      //console.log(text);
+      const prompt =
+        "Write a small story about 5 lines about a magic backpack.";
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      const text = response.text();
+      console.log(text);
+      setData(text);
+      setLoading(false);
       // const result = await model.generateContentStream([finalPrompt]);
       // if (result) {
       //   setLoading(false);
       //   console.log(result);
       //   setPrompt("");
       // }
-      for await (let chunk of result.stream) {
-        console.log(chunk)
-        const chunkText = chunk.text();
-        setData((prev) => {
-          let newText = prev + chunkText;
-          return newText
-        });
-       }
+      // for await (let chunk of result.stream) {
+      //   console.log(chunk)
+      //   const chunkText = chunk.text();
+      //   setData((prev) => {
+      //     let newText = prev + chunkText;
+      //     return newText
+      //   });
+      //  }
     } catch (err) {
-      setLoading(false)
+      setLoading(false);
       console.log("ERROR_____________________", JSON.stringify(err));
     }
   };
 
   return (
     <SafeAreaView>
-      <Text className="mt-10 p-2 text-3xl text-center mb-4 font-pbold">
-        {loading ? "loading": "Amplify Dentistry"}
-      </Text>
+      {loading ? (
+        <Text className="mt-10 p-2 text-3xl text-center mb-4 font-pbold">
+          Loading...
+        </Text>
+      ) : (
+        <Text className="mt-10 p-2 text-3xl text-center mb-4 font-pbold">
+          Amplify Dentistry
+        </Text>
+      )}
       <View>
         <TextInput
           className="text-lg bg-slate-200 border-2 border-gray-500 m-2 p-2 rounded-xl "
@@ -69,7 +78,7 @@ export default function Home() {
         <View>
           <Text className="text-lg">{data}</Text>
         </View>
-      ):null}
+      ) : null}
     </SafeAreaView>
   );
 }

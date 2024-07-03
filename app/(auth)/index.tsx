@@ -76,7 +76,6 @@ export default function LoginScreen() {
           title="Sign Up"
           onPress={() => router.push("/(auth)/sign-up")}
         />
-        <Button title="Go Up" onPress={() => router.push("/(test)/index")} />
       </View>
       <View>
         <TouchableOpacity style={styles.button} onPress={routeToTest}>
@@ -85,15 +84,9 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-      <Link href="text-view">
+      {/* <Link href="text-view">
         <ThemedText type="link">Go to home screen!</ThemedText>
-      </Link>
-      <Link href="/(test)/index">
-        <ThemedText type="link">Go to test screen!</ThemedText>
-      </Link>
-      <Link href="/test-view/index">
-        <ThemedText type="link">Go to something screen!</ThemedText>
-      </Link>
+      </Link> */}
     </SafeAreaView>
   );
 }
