@@ -11,9 +11,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useState } from "react";
-import { useRouter } from "expo-router";
+import { Link, useNavigation, useRouter } from "expo-router";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import app, { auth } from "@/firebaseConfig";
+import { ThemedText } from "@/components/ThemedText";
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -22,6 +23,12 @@ export default function LoginScreen() {
   const [password, setPassword] = useState<string>("");
 
   //const auth = getAuth(app);
+
+  const navigator = useNavigation();
+
+  const routeToTest = () => {
+    router.push("/test-view/index");
+  };
 
   const loginUser = async () => {
     if (!email || !password) {
@@ -65,15 +72,28 @@ export default function LoginScreen() {
       </View>
       <View className="flex flex-row justify-center items-center">
         <Text className="text-lg">Don't have an account?</Text>
-        <Button title="Sign Up" onPress={() => router.push("/(auth)/signup")} />
+        <Button
+          title="Sign Up"
+          onPress={() => router.push("/(auth)/sign-up")}
+        />
+        <Button title="Go Up" onPress={() => router.push("/(test)/index")} />
       </View>
       <View>
-        <TouchableOpacity style={styles.button} onPress={loginUser}>
+        <TouchableOpacity style={styles.button} onPress={routeToTest}>
           <Text style={styles.buttonText} className="text-center">
             Login
           </Text>
         </TouchableOpacity>
       </View>
+      <Link href="text-view">
+        <ThemedText type="link">Go to home screen!</ThemedText>
+      </Link>
+      <Link href="/(test)/index">
+        <ThemedText type="link">Go to test screen!</ThemedText>
+      </Link>
+      <Link href="/test-view/index">
+        <ThemedText type="link">Go to something screen!</ThemedText>
+      </Link>
     </SafeAreaView>
   );
 }

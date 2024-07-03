@@ -29,6 +29,14 @@
     "plugins": [
       "expo-router"
     ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "apiUrl": "https://crack-crime-bahamas.vercel.app",
+      "NEXT_PUBLIC_GEMINI_KEY":"AIzaSyCILBzxSY6FcWmrY1y3kDpwGy0guZAXGZY",
+      "localApiUrl": "http://localhost:3000"
+    },
     "experiments": {
       "typedRoutes": true
     }
