@@ -26,9 +26,9 @@ export default function LoginScreen() {
 
   const navigator = useNavigation();
 
-  const routeToTest = () => {
-    router.push("/test-view/index");
-  };
+  // const routeToTest = () => {
+  //   router.push("/test-view/index");
+  // };
 
   const loginUser = async () => {
     if (!email || !password) {
@@ -78,7 +78,7 @@ export default function LoginScreen() {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.button} onPress={routeToTest}>
+        <TouchableOpacity style={styles.button} onPress={loginUser}>
           <Text style={styles.buttonText} className="text-center">
             Login
           </Text>

@@ -45,6 +45,8 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
+    textAlign: 'center',
+    margin: "auto",
     fontWeight: 'bold',
     lineHeight: 32,
   },
