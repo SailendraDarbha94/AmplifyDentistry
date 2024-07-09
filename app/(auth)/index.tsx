@@ -84,9 +84,15 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-      {/* <Link href="text-view">
+      <Link href="text-view">
         <ThemedText type="link">Go to home screen!</ThemedText>
-      </Link> */}
+      </Link>
+      <Link href="years/slug/third-year">
+        <ThemedText type="link">Go to second year!</ThemedText>
+      </Link>
+      <Link href="years/subject/something">
+        <ThemedText type="link">Go to testing screen!</ThemedText>
+      </Link>
     </SafeAreaView>
   );
 }

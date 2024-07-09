@@ -62,65 +62,35 @@ export default function Home() {
     }
   };
 
-  const yearWiseSubjects = () => {
-    switch (slug) {
-      case "first-year":
-        return (
-          <ScrollView>
-            {firstYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
-            })}
-          </ScrollView>
-        );
-      case "second-year":
-        return (
-          <ScrollView>
-            {secondYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
-            })}
-          </ScrollView>
-        );
-      case "third-year":
-        return (
-          <ScrollView>
-            {thirdYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
-            })}
-          </ScrollView>
-        );
-      case "fourth-year":
-        return (
-          <ScrollView>
-            {fourthYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
-            })}
-          </ScrollView>
-        );
-    }
-  };
+
 
   return (
-    <SafeAreaView className="flex-1" edges={["left", "right", "bottom"]}>
-      <View className="bg-purple-300 h-2/5 flex justify-center">
-        {loading ? (
-          <Text className="p-2 text-3xl text-center font-pbold bg">
-            Loading...
-          </Text>
-        ) : (
-          <Text className="p-2 text-3xl text-center font-pbold">
-            Amplify {slug}
-          </Text>
-        )}
-        {/* <TextInput
+    <SafeAreaView>
+      {loading ? (
+        <Text className="mt-10 p-2 text-3xl text-center mb-4 font-pbold">
+          Loading...
+        </Text>
+      ) : (
+        <Text className="mt-10 p-2 text-3xl text-center mb-4 font-pbold">
+          Amplify {slug}
+        </Text>
+      )}
+      <View>
+        <TextInput
           className="text-lg bg-slate-200 border-2 border-gray-500 m-2 p-2 rounded-xl "
           placeholder="Enter Prompt"
           autoCapitalize="none"
           value={prompt}
           onChangeText={setPrompt}
         />
-        <Button title="Ask" color="green" onPress={getAiResponse} /> */}
+        <Button title="Ask" color="green" onPress={getAiResponse} />
       </View>
-      <View className="h-3/5">{yearWiseSubjects()}</View>
+      <View><Text>{slug}</Text></View>
+      {data ? (
+        <View>
+          <Text className="text-lg">{data}</Text>
+        </View>
+      ) : null}
     </SafeAreaView>
   );
 }
