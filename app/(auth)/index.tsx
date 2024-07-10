@@ -87,10 +87,10 @@ export default function LoginScreen() {
       <Link href="text-view">
         <ThemedText type="link">Go to home screen!</ThemedText>
       </Link>
-      <Link href="years/slug/third-year">
+      <Link href="years/slug/first-year">
         <ThemedText type="link">Go to second year!</ThemedText>
       </Link>
-      <Link href="years/subject/something">
+      <Link href="years/subject/Human-Physiology">
         <ThemedText type="link">Go to testing screen!</ThemedText>
       </Link>
     </SafeAreaView>

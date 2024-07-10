@@ -1,19 +1,23 @@
 export const firstYear = [
     {
         id: 1,
-        name: "Human Anatomy"
+        name: "Human Anatomy",
+        slug: "Human-Anatomy"
     },
     {
         id: 2,
-        name: "Dental Anatomy & Histology"
+        name: "Dental Anatomy & Histology",
+        slug: "Dental-Anatomy-&-Histology"
     },
     {
         id: 3,
-        name: "Biochemistry"
+        name: "Biochemistry",
+        slug: "Biochemistry"
     },
     {
         id: 4,
-        name: "Human Physiology"
+        name: "Human Physiology",
+        slug: "Human-Physiology"
     }
 ]
 

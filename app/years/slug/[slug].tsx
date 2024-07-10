@@ -7,8 +7,8 @@ import {
 } from "@/constants/subjects";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Constants from "expo-constants";
-import { useLocalSearchParams } from "expo-router";
-import { useState } from "react";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -25,6 +25,15 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home() {
   const { slug } = useLocalSearchParams();
+  const heading = slug?.toString()?.split("-").join(" ");
+  const navigation = useNavigation();
+  useEffect(() => {
+    navigation.setOptions({
+      headerShown: true,
+      headerBackTitle: "Back",
+      headerTitle: heading,
+    });
+  }, [navigation, heading]);
   const [loading, setLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>("");
   const [data, setData] = useState<string>("");
@@ -68,7 +77,7 @@ export default function Home() {
         return (
           <ScrollView>
             {firstYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
+              return <SubjectCard key={subject.id} name={subject.name} path={subject.slug} />;
             })}
           </ScrollView>
         );
@@ -76,7 +85,7 @@ export default function Home() {
         return (
           <ScrollView>
             {secondYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
+              return <SubjectCard key={subject.id} name={subject.name} path={subject.slug} />;
             })}
           </ScrollView>
         );
@@ -84,7 +93,7 @@ export default function Home() {
         return (
           <ScrollView>
             {thirdYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
+              return <SubjectCard key={subject.id} name={subject.name} path={subject.slug} />;
             })}
           </ScrollView>
         );
@@ -92,7 +101,7 @@ export default function Home() {
         return (
           <ScrollView>
             {fourthYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} />;
+              return <SubjectCard path={subject.slug} key={subject.id} name={subject.name} />;
             })}
           </ScrollView>
         );

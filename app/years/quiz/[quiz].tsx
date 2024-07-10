@@ -7,7 +7,7 @@ import {
 } from "@/constants/subjects";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Constants from "expo-constants";
-import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
+import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Image,
@@ -23,7 +23,7 @@ import {
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-interface Quiz {
+export interface Quiz {
   id: string;
   question: string;
   answer: string;
@@ -36,12 +36,12 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
+import QuizQuestion from "@/components/QuizQuestion";
 
 export default function Home() {
-  const { subject } = useLocalSearchParams();
-  const heading = subject?.toString()?.split("-").join(" ");
+  const { quiz } = useLocalSearchParams();
+  const heading = quiz?.toString()?.split("-").join(" ");
   const navigation = useNavigation();
-  const router = useRouter()
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -52,12 +52,13 @@ export default function Home() {
   const [loading, setLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>("");
   const [data, setData] = useState<Quiz[] | null>(null);
+  const [score, setScore] = useState<number>(0);
   const apiKey = Constants.expoConfig?.extra?.NEXT_PUBLIC_GEMINI_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const finalPrompt = `You are a helpful assistant that will answer this question : ${prompt}`;
 
-  const PROMPT = `generate 3 quiz questions in the subject of Human Anatomy for 
+  const PROMPT = `generate 5 quiz questions in the subject of ${heading} for 
   dental students in this JSON format
   {
     questions : {
@@ -103,6 +104,10 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    getAiResponse();
+  }, []);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
@@ -118,15 +123,9 @@ export default function Home() {
           Loading...
         </Text>
       ) : (
-        <View>
-          <TextInput
-            className="text-lg bg-slate-200 border-2 border-gray-500 m-2 p-2 rounded-xl "
-            placeholder="Enter Prompt"
-            autoCapitalize="none"
-            value={prompt}
-            onChangeText={setPrompt}
-          />
-          <Button title="Ask" color="green" onPress={getAiResponse} />
+        <View className="flex flex-row justify-evenly">
+          <Text>Score :</Text>
+          <ThemedText type="subtitle">{score}</ThemedText>
         </View>
       )}
 
@@ -134,13 +133,7 @@ export default function Home() {
         data.flatMap((quizQuestion: Quiz) => {
           return (
             <View id={quizQuestion.id}>
-              <Text>{quizQuestion.question}</Text>
-              <View className="flex flex-row flex-wrap">
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[0]}</Text>
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[1]}</Text>
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[2]}</Text>
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[3]}</Text>
-              </View>
+              <QuizQuestion setScore={setScore} quizQuestion={quizQuestion} />
             </View>
           );
         })}
@@ -160,14 +153,14 @@ export default function Home() {
           ),
         })}
       </Collapsible> */}
-      <View className="flex flex-row justify-between">
-        <TouchableOpacity className="bg-fuchsia-400 w-[45%] p-2 rounded-md text-center" onPress={() => router.push(`/years/quiz/${subject}`)}>
-          <Text>Quiz</Text>
+      {/* <View className="flex flex-row justify-between">
+        <TouchableOpacity className="bg-fuchsia-400 w-[45%] p-2 rounded-md text-center">
+          <Text>Button</Text>
         </TouchableOpacity>
         <TouchableOpacity className="bg-fuchsia-400 w-[45%] rounded-md p-2 text-center">
           <Text>Button</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </ParallaxScrollView>
   );
 }
