@@ -37,6 +37,7 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
 import QuizQuestion from "@/components/QuizQuestion";
+import BackgroundImage from "../subject/BackgroundImage";
 
 export default function Home() {
   const { quiz } = useLocalSearchParams();
@@ -112,7 +113,7 @@ export default function Home() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
+        <BackgroundImage subject={quiz} />
       }
     >
       <ThemedView style={styles.titleContainer}>
@@ -128,18 +129,18 @@ export default function Home() {
           <ThemedText type="subtitle">{score}</ThemedText>
         </View>
       )}
-      <View className="flex flex-row justify-between font-pmedium">
+      {/* <View className="flex flex-row justify-between font-pmedium">
         <TouchableOpacity className="bg-sky-300 w-[45%] p-2 rounded-md text-center">
           <Text className="text-center">Submit</Text>
         </TouchableOpacity>
         <TouchableOpacity className="bg-red-500 w-[45%] rounded-md p-2 text-center">
           <Text className="text-center text-white">Retake</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
       {data &&
         data.flatMap((quizQuestion: Quiz) => {
           return (
-            <View id={quizQuestion.id}>
+            <View key={quizQuestion.id}>
               <QuizQuestion setScore={setScore} quizQuestion={quizQuestion} />
             </View>
           );

@@ -84,7 +84,7 @@ export default function LoginScreen() {
           </Text>
         </TouchableOpacity>
       </View>
-      <Link href="text-view">
+      <Link href="/(tabs)">
         <ThemedText type="link">Go to home screen!</ThemedText>
       </Link>
       <Link href="years/slug/first-year">

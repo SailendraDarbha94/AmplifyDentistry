@@ -18,7 +18,7 @@ export default function QuizQuestion({
       });
     } else {
       setScore((prev: number) => {
-        return prev + 1;
+        return prev - 1;
       });
     }
   };

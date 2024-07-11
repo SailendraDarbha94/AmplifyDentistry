@@ -1,25 +1,17 @@
 import { SubjectCard } from "@/components/SubjectCard";
-import TestCard from "@/components/TestCard";
 import {
   firstYear,
   fourthYear,
   secondYear,
   thirdYear,
 } from "@/constants/subjects";
-import { GoogleGenerativeAI } from "@google/generative-ai";
-import Constants from "expo-constants";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { useEffect, useState } from "react";
 import {
   Image,
   StyleSheet,
   View,
-  Platform,
-  TextInput,
   Text,
-  Button,
-  TouchableOpacity,
-  ScrollViewComponent,
   ScrollView,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -58,7 +50,7 @@ export default function Home() {
       case "third-year":
         return (
           <Image
-            source={require("@/assets/final/third-year.png")}
+            source={require("@/assets/subjects/Public-Health-Dentistry.png")}
             resizeMode="cover"
             className="w-full h-full"
           />
@@ -66,7 +58,7 @@ export default function Home() {
       case "fourth-year":
         return (
           <Image
-            source={require("@/assets/final/fourth-year.png")}
+            source={require("@/assets/final/third-year.png")}
             resizeMode="cover"
             className="w-full h-full"
           />

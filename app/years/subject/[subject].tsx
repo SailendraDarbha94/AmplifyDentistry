@@ -19,6 +19,7 @@ import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView } from "react-native-safe-area-context";
+import BackgroundImage from "./BackgroundImage";
 
 export default function Home() {
   const { subject } = useLocalSearchParams();
@@ -124,15 +125,16 @@ export default function Home() {
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        tester ? (
-          tester
-        ) : (
-          <Image
-            source={require("@/assets/final/first-year.png")}
-            resizeMode="cover"
-            className="w-full h-full"
-          />
-        )
+        <BackgroundImage subject={subject} />
+        // tester ? (
+        //   tester
+        // ) : (
+        //   <Image
+        //     source={require("@/assets/final/first-year.png")}
+        //     resizeMode="cover"
+        //     className="w-full h-full"
+        //   />
+        // )
       }
     >
       <ThemedView style={styles.titleContainer}>
@@ -146,7 +148,7 @@ export default function Home() {
         <View>
           <TextInput
             className="text-lg bg-slate-200 border-2 border-gray-500 m-2 p-2 rounded-xl "
-            placeholder="Enter Prompt"
+            placeholder="Enter your doubt"
             autoCapitalize="none"
             value={prompt}
             onChangeText={setPrompt}
