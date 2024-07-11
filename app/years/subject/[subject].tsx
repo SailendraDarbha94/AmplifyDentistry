@@ -39,7 +39,7 @@ export default function Home() {
   const apiKey = Constants.expoConfig?.extra?.NEXT_PUBLIC_GEMINI_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-  const finalPrompt = `You are a helpful assistant that will answer this question : ${prompt}`;
+  const finalPrompt = `You are a helpful somewhat jovial dental professor that will answer this question : ${prompt}. You shall politely decline questions about any other topic or any other requests that do not have anything to do with medical field.`;
 
   const getAiResponse = async () => {
     setLoading(true);

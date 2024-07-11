@@ -59,7 +59,8 @@ export default function Home() {
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const finalPrompt = `You are a helpful assistant that will answer this question : ${prompt}`;
 
-  const PROMPT = `generate 5 quiz questions in the subject of ${heading} for 
+  const PROMPT = `You are a Professor who creates somewhat tough but fun multiple choice questions for students. 
+  Now generate 5 quiz questions in the subject of ${heading} for 
   dental students in this JSON format
   {
     questions : {
@@ -112,9 +113,7 @@ export default function Home() {
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <BackgroundImage subject={quiz} />
-      }
+      headerImage={<BackgroundImage subject={quiz} />}
     >
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">{heading}</ThemedText>
