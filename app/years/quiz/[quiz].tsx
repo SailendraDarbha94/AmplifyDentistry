@@ -123,12 +123,19 @@ export default function Home() {
           Loading...
         </Text>
       ) : (
-        <View className="flex flex-row justify-evenly">
+        <View className="flex flex-row justify-evenly items-center">
           <Text>Score :</Text>
           <ThemedText type="subtitle">{score}</ThemedText>
         </View>
       )}
-
+      <View className="flex flex-row justify-between font-pmedium">
+        <TouchableOpacity className="bg-sky-300 w-[45%] p-2 rounded-md text-center">
+          <Text className="text-center">Submit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="bg-red-500 w-[45%] rounded-md p-2 text-center">
+          <Text className="text-center text-white">Retake</Text>
+        </TouchableOpacity>
+      </View>
       {data &&
         data.flatMap((quizQuestion: Quiz) => {
           return (
@@ -153,14 +160,6 @@ export default function Home() {
           ),
         })}
       </Collapsible> */}
-      {/* <View className="flex flex-row justify-between">
-        <TouchableOpacity className="bg-fuchsia-400 w-[45%] p-2 rounded-md text-center">
-          <Text>Button</Text>
-        </TouchableOpacity>
-        <TouchableOpacity className="bg-fuchsia-400 w-[45%] rounded-md p-2 text-center">
-          <Text>Button</Text>
-        </TouchableOpacity>
-      </View> */}
     </ParallaxScrollView>
   );
 }

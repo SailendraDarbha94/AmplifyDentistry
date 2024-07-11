@@ -1,10 +1,3 @@
-import { SubjectCard } from "@/components/SubjectCard";
-import {
-  firstYear,
-  fourthYear,
-  secondYear,
-  thirdYear,
-} from "@/constants/subjects";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Constants from "expo-constants";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
@@ -22,16 +15,6 @@ import {
   ScrollView,
 } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
-
-interface Quiz {
-  id: string;
-  question: string;
-  answer: string;
-  options: string[];
-}
-
-import { Collapsible } from "@/components/Collapsible";
-import { ExternalLink } from "@/components/ExternalLink";
 import ParallaxScrollView from "@/components/ParallaxScrollView";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
@@ -41,7 +24,7 @@ export default function Home() {
   const { subject } = useLocalSearchParams();
   const heading = subject?.toString()?.split("-").join(" ");
   const navigation = useNavigation();
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -51,37 +34,20 @@ export default function Home() {
   }, [navigation]);
   const [loading, setLoading] = useState<boolean>(false);
   const [prompt, setPrompt] = useState<string>("");
-  const [data, setData] = useState<Quiz[] | null>(null);
+  const [data, setData] = useState<string | null>(null);
   const apiKey = Constants.expoConfig?.extra?.NEXT_PUBLIC_GEMINI_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   const finalPrompt = `You are a helpful assistant that will answer this question : ${prompt}`;
 
-  const PROMPT = `generate 3 quiz questions in the subject of Human Anatomy for 
-  dental students in this JSON format
-  {
-    questions : {
-      id: 1,
-      question: "multiple choice question",
-      answer: "text content of answer",
-      options: [ "option 1", "option 2", "option 3", "option 4" ]
-      }
-  }
-  make sure that the options should not have more than 2-3 words in them,
-  make sure that the answer is strictly matching the correct option`;
-
   const getAiResponse = async () => {
     setLoading(true);
     try {
-      const result = await model.generateContent(PROMPT);
+      const result = await model.generateContent(finalPrompt);
       const response = await result.response;
       const text = response.text();
       console.log(text);
-      const splitText = text.split("json");
-      const resplitText = splitText[1].split("```");
-      const parsedResponse = JSON.parse(resplitText[0]);
-      console.log("TEXT===========", parsedResponse);
-      setData(parsedResponse.questions);
+      setData(text.toString());
       setLoading(false);
       // const result = await model.generateContentStream([finalPrompt]);
       // if (result) {
@@ -103,11 +69,70 @@ export default function Home() {
     }
   };
 
+  const [tester, setTester] = useState<any>(null);
+  const bgImager = async () => {
+    switch (subject) {
+      case "Human-Anatomy":
+        setTester(
+          <Image
+            source={require("@/assets/subjects/Human-Anatomy.png")}
+            resizeMode="stretch"
+            className="w-full h-full"
+          />
+        );
+        break;
+      case "Human-Physiology":
+        setTester(
+          <Image
+            source={require("@/assets/subjects/Human-Physiology.png")}
+            resizeMode="stretch"
+            className="w-full h-full"
+          />
+        );
+        break;
+      case "Dental-Anatomy-&-Histology":
+        setTester(
+          <Image
+            source={require("@/assets/subjects/Dental-Anatomy-&-Histology.png")}
+            resizeMode="stretch"
+            className="w-full h-full"
+          />
+        );
+        break;
+      case "Biochemistry":
+        setTester(
+          <Image
+            source={require("@/assets/subjects/Biochemistry.png")}
+            resizeMode="stretch"
+            className="w-full h-full"
+          />
+        );
+        break;
+      default:
+        <Image
+          source={require("@/assets/final/first-year.png")}
+          resizeMode="cover"
+          className="w-full h-full"
+        />;
+    }
+  };
+  useEffect(() => {
+    bgImager();
+  }, []);
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
       headerImage={
-        <Ionicons size={310} name="code-slash" style={styles.headerImage} />
+        tester ? (
+          tester
+        ) : (
+          <Image
+            source={require("@/assets/final/first-year.png")}
+            resizeMode="cover"
+            className="w-full h-full"
+          />
+        )
       }
     >
       <ThemedView style={styles.titleContainer}>
@@ -129,21 +154,9 @@ export default function Home() {
           <Button title="Ask" color="green" onPress={getAiResponse} />
         </View>
       )}
-
-      {data &&
-        data.flatMap((quizQuestion: Quiz) => {
-          return (
-            <View id={quizQuestion.id}>
-              <Text>{quizQuestion.question}</Text>
-              <View className="flex flex-row flex-wrap">
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[0]}</Text>
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[1]}</Text>
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[2]}</Text>
-                <Text className="w-1/2 p-2 text-center bg-purple-50 rounded-md">{quizQuestion.options[3]}</Text>
-              </View>
-            </View>
-          );
-        })}
+      <View>
+        <Text className="font-pmedium text-lg">{data ? data : ""}</Text>
+      </View>
       {/* <Collapsible title="Animations">
         <ThemedText>
           This template includes an example of an animated component. The{' '}
@@ -160,14 +173,14 @@ export default function Home() {
           ),
         })}
       </Collapsible> */}
-      <View className="flex flex-row justify-between">
+      {/* <View className="flex flex-row justify-between">
         <TouchableOpacity className="bg-fuchsia-400 w-[45%] p-2 rounded-md text-center" onPress={() => router.push(`/years/quiz/${subject}`)}>
           <Text>Quiz</Text>
         </TouchableOpacity>
         <TouchableOpacity className="bg-fuchsia-400 w-[45%] rounded-md p-2 text-center">
           <Text>Button</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </ParallaxScrollView>
   );
 }

@@ -1,4 +1,5 @@
 import { SubjectCard } from "@/components/SubjectCard";
+import TestCard from "@/components/TestCard";
 import {
   firstYear,
   fourthYear,
@@ -35,49 +36,57 @@ export default function Home() {
     });
   }, [navigation, heading]);
   const [loading, setLoading] = useState<boolean>(false);
-  const [prompt, setPrompt] = useState<string>("");
-  const [data, setData] = useState<string>("");
-  const apiKey = Constants.expoConfig?.extra?.NEXT_PUBLIC_GEMINI_KEY;
-  const genAI = new GoogleGenerativeAI(apiKey);
-  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-  const finalPrompt = `You are a helpful assistant that will answer this question : ${prompt}`;
 
-  const getAiResponse = async () => {
-    setLoading(true);
-    try {
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      const text = response.text();
-      console.log(text);
-      setData(text);
-      setLoading(false);
-      // const result = await model.generateContentStream([finalPrompt]);
-      // if (result) {
-      //   setLoading(false);
-      //   console.log(result);
-      //   setPrompt("");
-      // }
-      // for await (let chunk of result.stream) {
-      //   console.log(chunk)
-      //   const chunkText = chunk.text();
-      //   setData((prev) => {
-      //     let newText = prev + chunkText;
-      //     return newText
-      //   });
-      //  }
-    } catch (err) {
-      setLoading(false);
-      console.log("ERROR_____________________", JSON.stringify(err));
+  const yearWiseBackgrounds = () => {
+    switch (slug) {
+      case "first-year":
+        return (
+          <Image
+            source={require("@/assets/final/first-year.png")}
+            resizeMode="cover"
+            className="w-full h-full"
+          />
+        );
+      case "second-year":
+        return (
+          <Image
+            source={require("@/assets/final/second-year.png")}
+            resizeMode="cover"
+            className="w-full h-full"
+          />
+        );
+      case "third-year":
+        return (
+          <Image
+            source={require("@/assets/final/third-year.png")}
+            resizeMode="cover"
+            className="w-full h-full"
+          />
+        );
+      case "fourth-year":
+        return (
+          <Image
+            source={require("@/assets/final/fourth-year.png")}
+            resizeMode="cover"
+            className="w-full h-full"
+          />
+        );
     }
   };
-
   const yearWiseSubjects = () => {
     switch (slug) {
       case "first-year":
         return (
           <ScrollView>
             {firstYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} path={subject.slug} />;
+              return (
+                <SubjectCard
+                  imageUrl={subject.uri}
+                  key={subject.id}
+                  name={subject.name}
+                  path={subject.slug}
+                />
+              );
             })}
           </ScrollView>
         );
@@ -85,7 +94,14 @@ export default function Home() {
         return (
           <ScrollView>
             {secondYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} path={subject.slug} />;
+              return (
+                <SubjectCard
+                  imageUrl={subject.uri}
+                  key={subject.id}
+                  name={subject.name}
+                  path={subject.slug}
+                />
+              );
             })}
           </ScrollView>
         );
@@ -93,7 +109,14 @@ export default function Home() {
         return (
           <ScrollView>
             {thirdYear.flatMap((subject: any) => {
-              return <SubjectCard key={subject.id} name={subject.name} path={subject.slug} />;
+              return (
+                <SubjectCard
+                  imageUrl={subject.uri}
+                  key={subject.id}
+                  name={subject.name}
+                  path={subject.slug}
+                />
+              );
             })}
           </ScrollView>
         );
@@ -101,7 +124,14 @@ export default function Home() {
         return (
           <ScrollView>
             {fourthYear.flatMap((subject: any) => {
-              return <SubjectCard path={subject.slug} key={subject.id} name={subject.name} />;
+              return (
+                <SubjectCard
+                  imageUrl={subject.uri}
+                  path={subject.slug}
+                  key={subject.id}
+                  name={subject.name}
+                />
+              );
             })}
           </ScrollView>
         );
@@ -110,24 +140,14 @@ export default function Home() {
 
   return (
     <SafeAreaView className="flex-1" edges={["left", "right", "bottom"]}>
-      <View className="bg-purple-300 h-2/5 flex justify-center">
+      <View className="bg-purple-300 h-2/5 flex justify-center border-b-4 border-black-200">
         {loading ? (
           <Text className="p-2 text-3xl text-center font-pbold bg">
             Loading...
           </Text>
         ) : (
-          <Text className="p-2 text-3xl text-center font-pbold">
-            Amplify {slug}
-          </Text>
+          <View className="w-full h-full">{yearWiseBackgrounds()}</View>
         )}
-        {/* <TextInput
-          className="text-lg bg-slate-200 border-2 border-gray-500 m-2 p-2 rounded-xl "
-          placeholder="Enter Prompt"
-          autoCapitalize="none"
-          value={prompt}
-          onChangeText={setPrompt}
-        />
-        <Button title="Ask" color="green" onPress={getAiResponse} /> */}
       </View>
       <View className="h-3/5">{yearWiseSubjects()}</View>
     </SafeAreaView>
